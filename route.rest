@@ -1,0 +1,30 @@
+GET http://localhost:3000/products
+
+###
+
+GET http://localhost:3000/products/617725e66c7f17358bf9a4bc
+
+###
+
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "name": "cccds",
+    "description": "dddd",
+    "category": ["dddd", "test"],
+    "thumbnail": "dddd"
+}
+
+###
+
+DELETE  http://localhost:3000/products/61a14fb6dae4218cd4420422
+
+###
+
+PATCH  http://localhost:3000/products/617725e66c7f17358bf9a4bc
+Content-Type: application/json
+
+{
+    "name": "Brzozowa Gać2"
+}

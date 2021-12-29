@@ -19,7 +19,9 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 
 const productsRouter = require('./routes/products');
+const categoriesRouter = require('./routes/categories');
 
 app.use('/products', productsRouter);
+app.use("/categories", categoriesRouter);
 
 app.listen(port, () => console.log(`Server is listening on port ${port}`));

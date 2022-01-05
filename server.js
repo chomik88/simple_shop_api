@@ -18,10 +18,16 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-const productsRouter = require('./routes/products');
-const categoriesRouter = require('./routes/categories');
+const productsRouter = require("./routes/products");
+const categoriesRouter = require("./routes/categories");
+const customersRouter = require("./routes/customers");
+const ordersRouter = require("./routes/orders");
 
-app.use('/products', productsRouter);
+app.use("/products", productsRouter);
 app.use("/categories", categoriesRouter);
+app.use("/customers", customersRouter);
+app.use("/orders", ordersRouter);
 
-app.listen(port, () => console.log(`Server is listening on port ${port}`));
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});

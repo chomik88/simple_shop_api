@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
 
-
 router.get("/", async (req, res) => {
   try {
     const products = await Product.find();
@@ -44,6 +43,9 @@ router.patch("/:id", getProduct, async (req, res) => {
   }
   if (req.body.thumbnail != null) {
     res.product.thumbnail = req.body.thumbnail;
+  }
+  if (req.body.attributes != null) {
+    res.product.attributes = req.body.attributes;
   }
 
   try {

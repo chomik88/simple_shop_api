@@ -32,7 +32,7 @@ router.patch("/:id", getAttribute, async (req, res) => {
   if (req.body.name != null) {
     res.attribute.name = req.body.name;
   }
-  if (rq.body.values != null) {
+  if (req.body.values != null) {
     res.attribute.values = req.body.values;
   }
 

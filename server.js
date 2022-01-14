@@ -22,13 +22,16 @@ const productsRouter = require("./routes/products");
 const categoriesRouter = require("./routes/categories");
 const customersRouter = require("./routes/customers");
 const ordersRouter = require("./routes/orders");
-const attributeRouter = require("./routes/attributes");
+const attributesRouter = require("./routes/attributes");
+const attributeValuesRouter = require("./routes/attributeValues");
 
 app.use("/products", productsRouter);
 app.use("/categories", categoriesRouter);
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
-app.use("/attributes", attributeRouter);
+app.use("/attributes", attributesRouter);
+app.use("/attributes", attributeValuesRouter);
+app.use("/attribute-values", attributeValuesRouter);
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

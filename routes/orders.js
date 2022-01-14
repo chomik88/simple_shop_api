@@ -80,7 +80,11 @@ async function getCustomerOrders(req, res, next) {
   try {
     orders = await Order.find({ customerId: req.params.id });
     if (orders == null) {
-      return res.status(404).json({ message: "Cannot find orders" });
+      return res
+        .status(404)
+        .json({
+          message: `Cannot find orders of customer with id: ${req.params.id}`,
+        });
     }
   } catch (error) {
     res.status(500).json({ message: error.message });

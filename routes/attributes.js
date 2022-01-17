@@ -17,8 +17,7 @@ router.get("/:id", getAttribute, (req, res) => {
 
 router.post("/", async (req, res) => {
   const attribute = new Attribute({
-    name: req.body.name,
-    values: req.body.values,
+    name: req.body.name
   });
   try {
     const newAttribute = await attribute.save();
@@ -31,9 +30,6 @@ router.post("/", async (req, res) => {
 router.patch("/:id", getAttribute, async (req, res) => {
   if (req.body.name != null) {
     res.attribute.name = req.body.name;
-  }
-  if (req.body.values != null) {
-    res.attribute.values = req.body.values;
   }
 
   try {

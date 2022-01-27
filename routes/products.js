@@ -4,13 +4,14 @@ const multer = require("multer");
 const uuid = require("uuid");
 const Product = require("../models/product");
 const fs = require("fs");
+const _ = require("lodash");
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/");
   },
   filename: function (req, file, cb) {
-    const fileName = `${uuid.v4()}_${file.originalname.replace(/#/g, '')}`;
+    const fileName = `${uuid.v4()}_${file.originalname.replace(/#/g, "")}`;
     cb(null, fileName);
   },
 });
@@ -73,13 +74,14 @@ router.patch("/:id", upload.array("images"), async (req, res) => {
   if (req.body.attributes != null) {
     updatedProduct.attributes = req.body.attributes;
   }
-  if (req.body.imagesToDelete != null) {
-    const filesToDelete = req.body.imagesToDelete.split(",");
+  if (req.body.servedImages != null) {
+    const servedImages = JSON.parse(req.body.servedImages);
+    const filesToDelete = updatedProduct.images.filter((item) => {
+      return _.findIndex(servedImages, item) === -1;
+    });
+    updatedProduct.images = servedImages;
     filesToDelete.forEach((file) => {
-      updatedProduct.images = updatedProduct.images.filter(
-        (image) => image.fileName != file
-      );
-      deleteFile(file);
+      deleteFile(file.fileName);
     });
   }
   if (req.files && req.files.length > 0) {
@@ -93,7 +95,6 @@ router.patch("/:id", upload.array("images"), async (req, res) => {
       }),
     ];
   }
-
   try {
     const product = await Product.findByIdAndUpdate(
       req.params.id,
@@ -129,11 +130,11 @@ async function getProduct(req, res, next) {
 }
 
 const deleteFile = (file) => {
-  const path = './uploads/' + file;
+  const path = "./uploads/" + file;
   fs.unlink(path, (error) => {
     if (error) {
-      console.log(error)
-    };
+      console.log(error);
+    }
   });
 };
 

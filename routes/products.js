@@ -85,6 +85,15 @@ router.patch("/:id", upload.array("images"), async (req, res) => {
     });
   }
   if (req.files && req.files.length > 0) {
+    req.files.forEach((file) => {
+      if (
+        req.body.mainImage &&
+        file.filename.includes(req.body.mainImage.replace(/#/g, ""))
+      ) {
+        updatedProduct.mainImage =
+          "http://localhost:3000/uploads/" + file.filename;
+      }
+    });
     updatedProduct.images = [
       ...updatedProduct.images,
       ...req.files.map((file) => {

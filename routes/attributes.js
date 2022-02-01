@@ -60,6 +60,7 @@ router.delete("/:id", getAttribute, async (req, res) => {
 });
 
 async function getAttribute(req, res, next) {
+  let attribute = null;
   try {
     attribute = await Attribute.findById(req.params.id);
     if (attribute == null) {
@@ -73,10 +74,11 @@ async function getAttribute(req, res, next) {
 }
 
 async function checkIfAttributeExists(req, res, next) {
+  let attribute = null;
   try {
     attribute = await Attribute.find({ name: req.body.name });
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    return res.status(404).json({ message: error.message });
   }
   res.attribute = attribute;
   next();

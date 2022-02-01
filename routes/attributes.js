@@ -15,13 +15,19 @@ router.get("/:id", getAttribute, (req, res) => {
   res.json(res.attribute);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", checkIfAttributeExists, async (req, res) => {
   const attribute = new Attribute({
-    name: req.body.name
+    name: req.body.name,
+    attributeValues: req.body.values,
   });
   try {
-    const newAttribute = await attribute.save();
-    res.status(201).json(newAttribute);
+    console.log(res.attribute);
+    if (res.attribute) {
+      res.status(409).json({ message: "Attribute already exists" });
+    } else {
+      const newAttribute = await attribute.save();
+      res.status(201).json(newAttribute);
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -30,6 +36,10 @@ router.post("/", async (req, res) => {
 router.patch("/:id", getAttribute, async (req, res) => {
   if (req.body.name != null) {
     res.attribute.name = req.body.name;
+  }
+
+  if (req.body.values != null) {
+    res.attribute.attributeValues = req.body.values;
   }
 
   try {
@@ -50,6 +60,7 @@ router.delete("/:id", getAttribute, async (req, res) => {
 });
 
 async function getAttribute(req, res, next) {
+  let attribute = null;
   try {
     attribute = await Attribute.findById(req.params.id);
     if (attribute == null) {
@@ -62,5 +73,15 @@ async function getAttribute(req, res, next) {
   next();
 }
 
+async function checkIfAttributeExists(req, res, next) {
+  let attribute = null;
+  try {
+    attribute = await Attribute.find({ name: req.body.name });
+  } catch (error) {
+    return res.status(404).json({ message: error.message });
+  }
+  res.attribute = attribute;
+  next();
+}
 
 module.exports = router;

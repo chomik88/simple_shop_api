@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
     description: req.body.description,
     category: req.body.category,
     thumbnail: req.body.thumbnail,
+    attributes: req.body.attributes,
   });
 
   try {
@@ -66,6 +67,7 @@ router.delete("/:id", getProduct, async (req, res) => {
 });
 
 async function getProduct(req, res, next) {
+  let product = null;
   try {
     product = await Product.findById(req.params.id);
     if (product == null) {

@@ -21,10 +21,7 @@ router.post("/", async (req, res) => {
     description: req.body.description,
     category: req.body.category,
     thumbnail: req.body.thumbnail,
-<<<<<<< HEAD
-=======
     attributes: req.body.attributes,
->>>>>>> 4e460d381737ac27013fe95f1aae94d98bd01964
   });
 
   try {

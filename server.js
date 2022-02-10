@@ -1,12 +1,13 @@
 require("dotenv").config();
-
 const express = require("express");
+
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
 
 app.use(cors());
-app.use(morgan('dev'));
+app.use(morgan("dev"));
+app.use("/uploads", express.static("uploads"));
 const mongoose = require("mongoose");
 
 mongoose
@@ -31,6 +32,12 @@ app.use("/categories", categoriesRouter);
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
 app.use("/attributes", attributesRouter);
+
+
+app.use(function (err, req, res, next) {
+  console.log("This is the invalid field ->", err.field);
+  next(err);
+});
 
 app.listen(port, () => {
   console.log(`Server is listening on port ${port}`);

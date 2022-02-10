@@ -126,6 +126,7 @@ router.delete("/:id", getProduct, async (req, res) => {
 });
 
 async function getProduct(req, res, next) {
+  let product = null;
   try {
     product = await Product.findById(req.params.id);
     if (product == null) {

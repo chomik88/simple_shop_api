@@ -84,6 +84,7 @@ router.patch("/:id", upload.array("images"), async (req, res) => {
       deleteFile(file.fileName);
     });
   }
+
   if (req.files && req.files.length > 0) {
     req.files.forEach((file) => {
       if (

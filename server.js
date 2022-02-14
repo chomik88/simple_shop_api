@@ -7,6 +7,7 @@ const app = express();
 
 app.use(cors());
 app.use(morgan('dev'));
+app.use("/uploads", express.static("uploads"));
 const mongoose = require("mongoose");
 
 mongoose

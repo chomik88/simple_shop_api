@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
   thumbnail: String,
   attributes: {
     type: Array,
-    attributeId: {
+    _id: {
       type: String,
       required: true,
     },

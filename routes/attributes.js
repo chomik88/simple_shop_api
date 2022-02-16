@@ -21,8 +21,7 @@ router.post("/", checkIfAttributeExists, async (req, res) => {
     attributeValues: req.body.values,
   });
   try {
-    console.log(res.attribute);
-    if (res.attribute) {
+    if (res.attribute.length > 0) {
       res.status(409).json({ message: "Attribute already exists" });
     } else {
       const newAttribute = await attribute.save();
